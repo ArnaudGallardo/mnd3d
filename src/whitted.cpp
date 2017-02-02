@@ -57,8 +57,15 @@ public:
           } else {
             r->recursionLevel = ray.recursionLevel - 1;
           }
+
+          //Max
+          float max = 0.0f;
+          if(r->direction.dot(hit->normal()) > 0) {
+            max = r->direction.dot(hit->normal());
+          }
+
           Color3f cr = Li(scene, *r);
-          return c + cr*hit->shape()->material()->reflectivity();
+          return c + cr*hit->shape()->material()->reflectivity()*max;
         }
         return scene->backgroundColor();
     }
