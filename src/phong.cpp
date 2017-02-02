@@ -24,6 +24,9 @@ Color3f Phong::brdf(const Vector3f& viewDir, const Vector3f& lightDir, const Nor
 
     c = m_diffuseColor + m_specularColor*pow(std::max(r.dot(viewDir),0.0f),m_exponent);
 
+    //Parfois 'inf', pourquoi ? Le pow ? On maximise à 1 pour eviter ce probleme
+    c = Color3f(c.r() > 1.0f ? 1.0f : c.r(),c.g() > 1.0f ? 1.0f : c.g(),c.b() > 1.0f ? 1.0f : c.b());
+
     return c;
 }
 

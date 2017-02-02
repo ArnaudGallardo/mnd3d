@@ -44,6 +44,7 @@ void Scene::intersect(const Ray& ray, Hit& hit) const
           }
         }
     }
+    free(tmp);
 }
 
 void Scene::addChild(Object *obj) {

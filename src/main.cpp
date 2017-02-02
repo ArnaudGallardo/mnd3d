@@ -28,19 +28,15 @@ void render(Scene* scene, ImageBlock* result, std::string outputName, bool* done
     ///  3. call the integartor to compute the color along this ray
     ///  4. write this color in the result image
 
-    /// Part 1 :
     Vector3f direction;
     for (size_t i = 0; i < camera->vpWidth(); i++) {
       for (size_t j = 0; j < camera->vpHeight(); j++) {
-        /* code */
         float coefI = 2*(i+0.5f)/camera->vpWidth()-1;
         float coefJ = 2*(j+0.5f)/camera->vpHeight()-1;
         direction = camF + coefI*camX + coefJ*camY;
         direction.normalize();
 
         Ray *r = new Ray(camera->position(),direction);
-        //Hit *h = new Hit();
-        //scene->intersect(*r,*h);
         Color3f color = integrator->Li(scene,*r);
         result->put(Vector2f(i,j), color);
       }

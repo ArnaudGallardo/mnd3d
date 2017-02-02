@@ -10,9 +10,9 @@ class Ray
 {
 public:
     Ray(const Point3f& o, const Vector3f& d)
-        : origin(o), direction(d), recursionLevel(0)
+        : origin(o), direction(d), recursionLevel(-1)
     {}
-    Ray() : recursionLevel(0) {}
+    Ray() : recursionLevel(-1) {}
 
     Point3f origin;
     Vector3f direction;
