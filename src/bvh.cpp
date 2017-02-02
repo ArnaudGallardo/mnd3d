@@ -62,7 +62,6 @@ bool BVH::intersectNode(int nodeId, const Ray& ray, Hit& hit) const
     // soit c'est un noeud interne (il faut visiter les fils (ou pas))
     bool found = false;
     if (m_nodes[nodeId].is_leaf) {
-      //printf("Leaf : %d\n", nodeId);
       Hit *tmp = new Hit();
       for (int i = m_nodes[nodeId].first_face_id; i < m_nodes[nodeId].first_face_id + m_nodes[nodeId].nb_faces; i++) {
         if (m_pMesh->intersectFace(ray,*tmp,m_faces[i])) {
@@ -75,7 +74,6 @@ bool BVH::intersectNode(int nodeId, const Ray& ray, Hit& hit) const
         }
       }
     } else {
-      //printf("Node : %d\tChild1 : %d\n", nodeId,m_nodes[nodeId].first_child_id);
       float tMin, tMax;
       Normal3f n;
       int first_child_id = m_nodes[nodeId].first_child_id;
@@ -146,8 +144,6 @@ void BVH::buildNode(int nodeId, int start, int end, int level, int targetCellSiz
       float max = 0;
       int dim = 0;
       for (int i = 0; i < 3; i++) {
-        //printf("BoxMax : %f - %f - %f\n", box.max()[0],box.max()[1],box.max()[2]);
-        //printf("BoxMin : %f - %f - %f\n", box.min()[0],box.min()[1],box.min()[2]);
         if (tmp[i] > max) {
           max = tmp[i];
           dim = i;
@@ -164,11 +160,9 @@ void BVH::buildNode(int nodeId, int start, int end, int level, int targetCellSiz
       Node node_right;
 
       int size = m_nodes.size();
-      node.first_child_id = size; //WUT
+      node.first_child_id = size; //Needs to be here, otherwise not working
       m_nodes.push_back(node_left);
       m_nodes.push_back(node_right);
-
-      //printf("Node : %d\tChild1 : %d\n", nodeId,node.first_child_id);
 
       // étape 5 : allouer les fils, et les construire en appelant buildNode...
       this->buildNode(size,start,middle,level+1,targetCellSize,maxDepth);

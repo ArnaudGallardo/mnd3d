@@ -318,23 +318,6 @@ bool Mesh::intersect(const Ray& ray, Hit& hit) const
     if( (!::intersect(ray, m_AABB, tMin, tMax, normal)) || tMin>hit.t())
         return false;
 
-    /*
-    hit.setT(tMin);
-    hit.setNormal(normal);
-    hit.setShape(this);
-
-    Hit *tmp = new Hit();
-    for (size_t i = 0; i < this->nbFaces(); i++) {
-      if (this->intersectFace(ray,*tmp,i)) {
-        if (tmp->t() < hit.t()) {
-          hit.setShape(this);
-          hit.setT(tmp->t());
-          hit.setNormal(tmp->normal());
-        }
-      }
-    }
-    */
-
     m_BVH->intersect(ray, hit);
 
     return true;
