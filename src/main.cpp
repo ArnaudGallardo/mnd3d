@@ -29,16 +29,16 @@ void render(Scene* scene, ImageBlock* result, std::string outputName, bool* done
     ///  4. write this color in the result image
 
     Vector3f direction;
-    for (size_t i = 0; i < camera->vpWidth(); i++) {
-      for (size_t j = 0; j < camera->vpHeight(); j++) {
-        float coefI = 2*(i+0.5f)/camera->vpWidth()-1;
-        float coefJ = 2*(j+0.5f)/camera->vpHeight()-1;
-        direction = camF + coefI*camX + coefJ*camY;
+    for (size_t i = 0; i < camera->vpHeight(); i++) {
+      for (size_t j = 0; j < camera->vpWidth(); j++) {
+      float coefI = 2*(i+0.5f)/camera->vpHeight()-1;
+        float coefJ = 2*(j+0.5f)/camera->vpWidth()-1;
+        direction = camF + coefJ*camX + coefI*camY;
         direction.normalize();
 
         Ray *r = new Ray(camera->position(),direction);
         Color3f color = integrator->Li(scene,*r);
-        result->put(Vector2f(i,j), color);
+        result->put(Vector2f(j,i), color);
       }
     }
 
